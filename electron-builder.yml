@@ -1,0 +1,25 @@
+appId: com.thequietproject.client
+productName: QUIET_Updater
+copyright: Copyright © 2024 Roy Derks
+files: ['./build/**/*', './public/electron.js']
+directories:
+  output: out
+
+# mac:
+#   category: public.app-category.utilities
+#   target:
+#     - dmg
+#     - mas
+#   icon: public/favicon.icns
+
+win:
+  icon: public/favicon.ico
+  artifactName: '${productName}.${ext}'
+  target:
+    - portable
+# linux:
+#   target:
+#     - deb
+#   synopsis: The QUIET Project client
+#   artifactName: '${productName}.${ext}'
+#   category: Game

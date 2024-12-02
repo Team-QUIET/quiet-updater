@@ -1,0 +1,32 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+.pnp
+.pnp.js
+
+# testing
+coverage
+
+# production
+build
+dist
+out
+
+# misc
+.env
+.env*
+.DS_Store
+*.bat
+quiet_log.txt
+jest_log.txt
+quiet
+QUIET
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+src/util/__tests__/QUIET/**/*
+quokka
+quokka-scratch.ts
+*.log
