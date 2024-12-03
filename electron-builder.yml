@@ -1,6 +1,6 @@
-appId: com.theloudproject.client
-productName: SCFA_Updater
-copyright: Copyright © 2020 Roy Derks
+appId: com.thequietproject.client
+productName: QUIET_Updater
+copyright: Copyright © 2024 Roy Derks
 files: ['./build/**/*', './public/electron.js']
 directories:
   output: out
@@ -20,6 +20,6 @@ win:
 # linux:
 #   target:
 #     - deb
-#   synopsis: The LOUD Project client
+#   synopsis: The QUIET Project client
 #   artifactName: '${productName}.${ext}'
 #   category: Game

@@ -1,7 +1,7 @@
 {
-	"name": "loud-client",
+	"name": "quiet-client",
 	"version": "6.1.11",
-	"description": "loud client description",
+	"description": "quiet client description",
 	"homepage": "./",
 	"author": {
 		"email": "dont@mail.com",
