@@ -18,15 +18,15 @@ out
 .env*
 .DS_Store
 *.bat
-loud_log.txt
+quiet_log.txt
 jest_log.txt
-loud
-LOUD
+quiet
+QUIET
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-src/util/__tests__/LOUD/**/*
+src/util/__tests__/QUIET/**/*
 quokka
 quokka-scratch.ts
 *.log

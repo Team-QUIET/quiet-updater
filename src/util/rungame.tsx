@@ -15,13 +15,13 @@ const rungame = () => {
           );
         }
         exec(
-          `"${BASE_URI}/bin/SupremeCommander.exe" /log "${BASE_URI_WIN}\\LOUD\\bin\\Loud.log" /init "${BASE_URI_WIN}\\LOUD\\bin\\LoudDataPath.lua"`
+          `"${BASE_URI}/bin/SupremeCommander.exe" /log "${BASE_URI_WIN}\\QUIET\\bin\\Loud.log" /init "${BASE_URI_WIN}\\QUIET\\bin\\LoudDataPath.lua"`
         );
       });
       return;
     }
     exec(
-      `"${BASE_URI}/bin/ForgedAlliance.exe" /log "${BASE_URI_WIN}\\LOUD\\bin\\Loud.log" /init "${BASE_URI_WIN}\\LOUD\\bin\\LoudDataPath.lua"`
+      `"${BASE_URI}/bin/ForgedAlliance.exe" /log "${BASE_URI_WIN}\\QUIET\\bin\\Loud.log" /init "${BASE_URI_WIN}\\QUIET\\bin\\LoudDataPath.lua"`
     );
   });
 };

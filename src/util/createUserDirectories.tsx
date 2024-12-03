@@ -3,9 +3,9 @@ import { BASE_URI } from '../constants';
 import { logEntry } from './logger';
 
 const createUserDirectories = () => {
-  fs.stat(`${BASE_URI}/LOUD/usermaps`, (err) => {
+  fs.stat(`${BASE_URI}/QUIET/usermaps`, (err) => {
     if (err) {
-      fs.mkdir(`${BASE_URI}/LOUD/usermaps`, { recursive: true }, (errMkdir) => {
+      fs.mkdir(`${BASE_URI}/QUIET/usermaps`, { recursive: true }, (errMkdir) => {
         if (errMkdir) {
           logEntry(
             `createUserDirectories:usermaps:mkDir:: ${errMkdir}`,
@@ -20,7 +20,7 @@ const createUserDirectories = () => {
         }
       });
     } else {
-      fs.readdir(`${BASE_URI}/LOUD/usermaps`, (errReadDir, files) => {
+      fs.readdir(`${BASE_URI}/QUIET/usermaps`, (errReadDir, files) => {
         if (err) {
           logEntry(
             `createUserDirectories:usermaps:readdir:: ${errReadDir}`,
@@ -38,9 +38,9 @@ const createUserDirectories = () => {
       });
     }
   });
-  fs.stat(`${BASE_URI}/LOUD/usermods`, (err) => {
+  fs.stat(`${BASE_URI}/QUIET/usermods`, (err) => {
     if (err) {
-      fs.mkdir(`${BASE_URI}/LOUD/usermods`, { recursive: true }, (errMkdir) => {
+      fs.mkdir(`${BASE_URI}/QUIET/usermods`, { recursive: true }, (errMkdir) => {
         if (errMkdir) {
           logEntry(
             `createUserDirectories:usermods:mkDir:: ${errMkdir}`,
@@ -55,7 +55,7 @@ const createUserDirectories = () => {
         }
       });
     } else {
-      fs.readdir(`${BASE_URI}/LOUD/usermods`, (errReadDir, files) => {
+      fs.readdir(`${BASE_URI}/QUIETx/usermods`, (errReadDir, files) => {
         if (err) {
           logEntry(
             `createUserDirectories:usermods:readdir:: ${errReadDir}`,

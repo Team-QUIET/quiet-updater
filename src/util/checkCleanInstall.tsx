@@ -5,7 +5,7 @@ import { from } from 'rxjs';
 const checkCleanInstall = () =>
   from(
     new Promise<void>((res, rej) => {
-      fs.stat(`${BASE_URI}/loud/bin/LoudDataPath.lua`, (errFA) => {
+      fs.stat(`${BASE_URI}/QUIET/bin/LoudDataPath.lua`, (errFA) => {
         if (errFA) {
           rej();
         }

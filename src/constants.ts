@@ -31,40 +31,40 @@ const DOC_URI_GAMEPREFS = path.resolve(
   )
 );
 
-const DIR_LOUD_BIN = `${BASE_URI}/LOUD/bin`;
-const DIR_LOUD_GAMEDATA = `${BASE_URI}/LOUD/gamedata`;
-const DIR_LOUD_USERMAPS = `${BASE_URI}/LOUD/usermaps`;
-const DIR_LOUD_USERMODS = `${BASE_URI}/LOUD/usermods`;
-const DIR_LOUD_USERMODS_LCE_ZIP = `${BASE_URI}/LOUD/usermods/LCE.zip`;
-const DIR_LOUD_USERMODS_M28_ZIP = `${BASE_URI}/LOUD/usermods/M28AI.zip`;
+const DIR_QUIET_BIN = `${BASE_URI}/QUIET/bin`;
+const DIR_QUIET_GAMEDATA = `${BASE_URI}/QUIET/gamedata`;
+const DIR_QUIET_USERMAPS = `${BASE_URI}/QUIET/usermaps`;
+const DIR_QUIET_USERMODS = `${BASE_URI}/QUIET/usermods`;
+const DIR_QUIET_USERMODS_LCE_ZIP = `${BASE_URI}/QUIET/usermods/LCE.zip`;
+const DIR_QUIET_USERMODS_M28_ZIP = `${BASE_URI}/QUIET/usermods/M28AI.zip`;
 const FILE_URI_LOG = `${BASE_URI}/SCFA_Updater.log`;
 const FILE_URI_LOG_FOLDER = `${BASE_URI}`;
-const FILE_URI_GAMELOG = `${BASE_URI}/LOUD/bin/loud.log`;
-const FILE_URI_GAMELOG_FOLDER = `${BASE_URI}/LOUD/bin`.replace(/\//g, '\\');
-const FILE_URI_HELP = `${BASE_URI}/LOUD/doc/help.txt`;
-const FILE_URI_INFO = `${BASE_URI}/LOUD/doc/info.txt`;
-const FILE_URI_LOUDDATAPATHLUA = `${BASE_URI}/LOUD/bin/LoudDataPath.lua`;
-const FILE_URI_ICONMOD = `${BASE_URI}/LOUD/bin/Advanced Strategic Icons Mod Installer.exe`.replace(
+const FILE_URI_GAMELOG = `${BASE_URI}/QUIET/bin/loud.log`;
+const FILE_URI_GAMELOG_FOLDER = `${BASE_URI}/QUIET/bin`.replace(/\//g, '\\');
+const FILE_URI_HELP = `${BASE_URI}/QUIET/doc/help.txt`;
+const FILE_URI_INFO = `${BASE_URI}/QUIET/doc/info.txt`;
+const FILE_URI_QUIETDATAPATHLUA = `${BASE_URI}/QUIET/bin/LoudDataPath.lua`;
+const FILE_URI_ICONMOD = `${BASE_URI}/QUIET/bin/Advanced Strategic Icons Mod Installer.exe`.replace(
   /\//g,
   '\\'
 );
-const FILE_URI_ICON = `${BASE_URI}/LOUD/bin/quietlogo.ico`;
-const FILE_URI_SHORTCUT = `${BASE_URI}/LOUD/bin/shortcut.vbs`;
+const FILE_URI_ICON = `${BASE_URI}/QUIET/bin/quietlogo.ico`;
+const FILE_URI_SHORTCUT = `${BASE_URI}/QUIET/bin/shortcut.vbs`;
 
 /**
  * wget -q --show-progress -N https://eu.theloudproject.org/7z.dll
    wget -q --show-progress -N https://eu.theloudproject.org/7z.exe
-   wget -q --show-progress -N https://eu.theloudproject.org/LOUD.7z
+   wget -q --show-progress -N https://eu.theloudproject.org/QUIET.7z
  */
 const URI_EU_MIRROR = 'https://eu.theloudproject.org/';
 const URI_EU_MIRROR_7ZIP_DLL = `${URI_EU_MIRROR}7z.dll`;
 const URI_EU_MIRROR_7ZIP_EXE = `${URI_EU_MIRROR}7z.exe`;
-const URI_EU_MIRROR_LOUD = `${URI_EU_MIRROR}LOUD.7z`;
+const URI_EU_MIRROR_QUIET = `${URI_EU_MIRROR}QUIET.7z`;
 
 export {
   BASE_URI,
-  DIR_LOUD_BIN,
-  DIR_LOUD_GAMEDATA,
+  DIR_QUIET_BIN,
+  DIR_QUIET_GAMEDATA,
   DOC_DIR,
   DOC_URI_GAMEPREFS,
   DOC_DIR_SUPCOM_MAPS,
@@ -74,18 +74,18 @@ export {
   FILE_URI_GAMELOG,
   FILE_URI_HELP,
   FILE_URI_INFO,
-  FILE_URI_LOUDDATAPATHLUA,
+  FILE_URI_QUIETDATAPATHLUA,
   FILE_URI_ICONMOD,
   FILE_URI_ICON,
   FILE_URI_SHORTCUT,
-  DIR_LOUD_USERMAPS,
-  DIR_LOUD_USERMODS,
-  DIR_LOUD_USERMODS_LCE_ZIP,
-  DIR_LOUD_USERMODS_M28_ZIP,
+  DIR_QUIET_USERMAPS,
+  DIR_QUIET_USERMODS,
+  DIR_QUIET_USERMODS_LCE_ZIP,
+  DIR_QUIET_USERMODS_M28_ZIP,
   FILE_URI_LOG_FOLDER,
   FILE_URI_GAMELOG_FOLDER,
   URI_EU_MIRROR,
   URI_EU_MIRROR_7ZIP_DLL,
   URI_EU_MIRROR_7ZIP_EXE,
-  URI_EU_MIRROR_LOUD,
+  URI_EU_MIRROR_QUIET,
 };

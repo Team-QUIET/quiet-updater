@@ -7,18 +7,18 @@ const create = (exePath: string) => {
   CreateDesktopShortcuts({
     windows: {
       filePath: `${BASE_URI}/SCFA_Updater.exe`,
-      name: 'LOUD Updater',
-      description: 'LOUD Project Updater',
+      name: 'QUIET Updater',
+      description: 'QUIET Project Updater',
       icon: FILE_URI_ICON,
     },
   });
   CreateDesktopShortcuts({
     windows: {
       filePath: exePath,
-      name: 'LOUD Forged Alliance',
-      description: 'LOUD Forged Alliance',
+      name: 'QUIET Forged Alliance',
+      description: 'QUIET Forged Alliance',
       icon: FILE_URI_ICON,
-      arguments: `/log '..\\LOUD\\bin\\Loud.log' /init '..\\LOUD\\bin\\LoudDataPath.lua'`,
+      arguments: `/log '..\\QUIET\\bin\\Loud.log' /init '..\\QUIET\\bin\\LoudDataPath.lua'`,
     },
   });
 };

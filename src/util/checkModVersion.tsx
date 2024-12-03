@@ -1,13 +1,13 @@
 import fs from 'fs';
 import path from 'path';
-import { DIR_LOUD_GAMEDATA, DIR_LOUD_USERMODS } from '../constants';
+import { DIR_QUIET_GAMEDATA, DIR_QUIET_USERMODS } from '../constants';
 // @ts-ignore
 import ZIP from 'adm-zip';
 
 const regexModInfo = /version\s*=\s*"?(.*)"?/i;
 
 export enum CheckModVersion {
-  LOUD,
+  QUIET,
   LCE,
   M28,
 }
@@ -15,14 +15,14 @@ export enum CheckModVersion {
 function checkModVersion(mod: CheckModVersion) {
   let _path = null;
   switch (mod) {
-    case CheckModVersion.LOUD:
-      _path = `${DIR_LOUD_GAMEDATA}/lua/ai/CustomAIs_v2/ExtrasAI.lua`;
+    case CheckModVersion.QUIET:
+      _path = `${DIR_QUIET_GAMEDATA}/lua/ai/CustomAIs_v2/ExtrasAI.lua`;
       break;
     case CheckModVersion.LCE:
-      _path = `${DIR_LOUD_USERMODS}/QUIET-Community-Edition/mod_info.lua`;
+      _path = `${DIR_QUIET_USERMODS}/QUIET-Community-Edition/mod_info.lua`;
       break;
     case CheckModVersion.M28:
-      _path = `${DIR_LOUD_USERMODS}/M28AI/mod_info.lua`;
+      _path = `${DIR_QUIET_USERMODS}/M28AI/mod_info.lua`;
       break;
     default:
       break;
@@ -30,9 +30,9 @@ function checkModVersion(mod: CheckModVersion) {
   if (_path === null) {
     throw Error('No path selected');
   }
-  if (mod === CheckModVersion.LOUD) {
+  if (mod === CheckModVersion.QUIET) {
     try {
-      const scdPath = path.join(DIR_LOUD_GAMEDATA, 'lua.scd');
+      const scdPath = path.join(DIR_QUIET_GAMEDATA, 'lua.scd');
       fs.statSync(scdPath);
       let archive = new ZIP(scdPath);
       const versionJSON: string = archive.readAsText(

@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { DIR_LOUD_USERMAPS } from '../constants';
+import { DIR_QUIET_USERMAPS } from '../constants';
 import { from } from 'rxjs';
 import path from 'path';
 import parseScenario from './parseScenario';
@@ -13,7 +13,7 @@ const checkMap$ = (mapName: string, version?: string) => {
   return from(
     new Promise<{ mapDir: string; versionExists: boolean; version?: string }>(
       (res, rej) => {
-        fs.stat(path.join(DIR_LOUD_USERMAPS, mapDir), (err) => {
+        fs.stat(path.join(DIR_QUIET_USERMAPS, mapDir), (err) => {
           if (err) {
             console.error(err);
             res({ versionExists: false, mapDir });
@@ -21,7 +21,7 @@ const checkMap$ = (mapName: string, version?: string) => {
           }
           console.log('dir exists');
 
-          fs.readdir(path.join(DIR_LOUD_USERMAPS, mapDir), (err, files) => {
+          fs.readdir(path.join(DIR_QUIET_USERMAPS, mapDir), (err, files) => {
             if (err) {
               rej(err);
               return;
@@ -33,7 +33,7 @@ const checkMap$ = (mapName: string, version?: string) => {
             }
             try {
               const scenario = parseScenario(
-                path.join(DIR_LOUD_USERMAPS, mapDir, scenarioFile)
+                path.join(DIR_QUIET_USERMAPS, mapDir, scenarioFile)
               );
               res({
                 versionExists: scenario.map_version === version,

@@ -52,7 +52,7 @@ const defaultLogConfig: LogConfig = {
  * @param path
  */
 const updaterCreateLocalFileURI = (baseURI: string, path: string) =>
-  `${baseURI}/LOUD/${path}`.replace('\\', '/').replace('//', '/').trim();
+  `${baseURI}/QUIET/${path}`.replace('\\', '/').replace('//', '/').trim();
 
 /**
  * Create a remote file path from a RemoteFileInfo
@@ -131,7 +131,7 @@ const updaterGetCRCInfo$ = (logConfig: LogConfig = defaultLogConfig) =>
             'log',
             logConfig.channels
           );
-          client.get('LOUD/SCFA_FileInfo.txt', (err, socket) => {
+          client.get('QUIET/SCFA_FileInfo.txt', (err, socket) => {
             if (err) {
               logEntry(
                 `updaterGetCRCInfo$:get:: ${err}`,
@@ -188,10 +188,10 @@ const updaterGetRemoteFile$ = (
 ) => {
   return from<Promise<Buffer>>(
     new Promise((res) => {
-      client.get(`LOUD/${fileInfo.path}`, (err, socket) => {
+      client.get(`QUIET/${fileInfo.path}`, (err, socket) => {
         if (err) {
           logEntry(
-            `updaterGetRemoteFile$:get:: LOUD/${fileInfo.path} ${err}`,
+            `updaterGetRemoteFile$:get:: QUIET/${fileInfo.path} ${err}`,
             'error',
             logConfig.channels
           );
@@ -534,7 +534,7 @@ const updaterCreateLocalCRC$ = (logConfig = defaultLogConfig) => {
           });
         });
       };
-      walk(`${BASE_URI}/LOUD`, (err, results) => {
+      walk(`${BASE_URI}/QUIET`, (err, results) => {
         if (err || !results) {
           logEntry(
             `updaterCreateLocalCRC$:walk::${err} / ${results}`,
@@ -552,7 +552,7 @@ const updaterCreateLocalCRC$ = (logConfig = defaultLogConfig) => {
             const buffer = fs.readFileSync(result);
             const fileURI = path
               .normalize(result)
-              .replace(path.normalize(`${BASE_URI}/LOUD/`), '');
+              .replace(path.normalize(`${BASE_URI}/QUIET/`), '');
             const shacrypto = crypto.createHash('sha1');
             shacrypto.update(buffer);
             const sha1 = shacrypto.digest('hex').toUpperCase();
@@ -607,8 +607,8 @@ const updaterCleanupGameData$ = (
   }, [] as string[]);
   return from(
     new Promise((res) => {
-      fs.statSync(`${BASE_URI}/LOUD/gamedata`);
-      fs.readdir(`${BASE_URI}/LOUD/gamedata`, (err, entries) => {
+      fs.statSync(`${BASE_URI}/QUIET/gamedata`);
+      fs.readdir(`${BASE_URI}/QUIET/gamedata`, (err, entries) => {
         if (err) {
           logEntry(
             `updaterCleanupGamedata$:: ${err}`,
@@ -637,7 +637,7 @@ const updaterCleanupGameData$ = (
             );
             continue;
           }
-          fs.unlink(`${BASE_URI}/LOUD/gamedata/${entry}`, (errMv) => {
+          fs.unlink(`${BASE_URI}/QUIET/gamedata/${entry}`, (errMv) => {
             if (errMv) {
               logEntry(`updaterCleanupGamedata$:mv:: ${errMv}`);
             }
@@ -666,8 +666,8 @@ const updaterCleanupMaps$ = (
   }, [] as string[]);
   return from(
     new Promise((res) => {
-      fs.statSync(`${BASE_URI}/LOUD/maps`);
-      fs.readdir(`${BASE_URI}/LOUD/maps`, (err, entries) => {
+      fs.statSync(`${BASE_URI}/QUIET/maps`);
+      fs.readdir(`${BASE_URI}/QUIET/maps`, (err, entries) => {
         if (err) {
           logEntry(`updaterCleanupMaps$:: ${err}`, 'error', logConfig.channels);
         }
@@ -691,11 +691,11 @@ const updaterCleanupMaps$ = (
           res();
           return;
         }
-        fs.mkdirSync(`${BASE_URI}/LOUD/maps.unsupported`, { recursive: true });
+        fs.mkdirSync(`${BASE_URI}/QUIET/maps.unsupported`, { recursive: true });
         for (let entry of falseEntries) {
           mv(
-            `${BASE_URI}/LOUD/maps/${entry}`,
-            `${BASE_URI}/LOUD/maps.unsupported/${entry}`,
+            `${BASE_URI}/QUIET/maps/${entry}`,
+            `${BASE_URI}/QUIET/maps.unsupported/${entry}`,
             (errMv) => {
               if (errMv) {
                 logEntry(`updaterCleanupMaps$:mv:: ${errMv}`);
@@ -717,7 +717,7 @@ const updaterCleanupMods$ = (logConfig = defaultLogConfig) => {
   );
   return from(
     new Promise((res) => {
-      fs.stat(`${BASE_URI}/LOUD/mods`, (err) => {
+      fs.stat(`${BASE_URI}/QUIET/mods`, (err) => {
         if (err) {
           if (err.message.includes('ENOENT')) {
             // @ts-ignore
@@ -727,7 +727,7 @@ const updaterCleanupMods$ = (logConfig = defaultLogConfig) => {
           logEntry(`${err}`, 'error', logConfig.channels);
           throw err;
         }
-        const entries = fs.readdirSync(`${BASE_URI}/LOUD/mods`);
+        const entries = fs.readdirSync(`${BASE_URI}/QUIET/mods`);
         if (entries.length) {
           logEntry(
             'External maps and mods are to be placed in your "<Drive>:\\Users\\<your account>\\My Games\\Gas Powered Games\\Maps / Mods" folders and will be only loaded if they are toggled on in the launcher',
@@ -735,11 +735,11 @@ const updaterCleanupMods$ = (logConfig = defaultLogConfig) => {
             logConfig.channels
           );
         }
-        fs.mkdir(`${BASE_URI}/LOUD/mods.unsupported`, () => {
+        fs.mkdir(`${BASE_URI}/QUIET/mods.unsupported`, () => {
           for (let entry of entries) {
             mv(
-              `${BASE_URI}/LOUD/mods/${entry}`,
-              `${BASE_URI}/LOUD/mods.unsupported/${entry}`,
+              `${BASE_URI}/QUIET/mods/${entry}`,
+              `${BASE_URI}/QUIET/mods.unsupported/${entry}`,
               (err) => {
                 if (err) {
                   logEntry(

@@ -500,7 +500,7 @@ const library = {
 
   // WINDOWS
   makeWindowsShortcut: function (options) {
-    const vbsScript = path.join(BASE_URI, 'LOUD', 'bin', 'shortcut.vbs');
+    const vbsScript = path.join(BASE_URI, 'QUIET', 'bin', 'shortcut.vbs');
     const filePathName = path.parse(options.windows.filePath).name;
 
     let success = true;

@@ -1,17 +1,17 @@
 import fs from 'fs';
 import { spawn, exec } from 'child_process';
 import {
-  DIR_LOUD_GAMEDATA,
+  DIR_QUIET_GAMEDATA,
   DOC_DIR_SUPCOM_REPLAYS,
   FILE_URI_LOG,
   FILE_URI_INFO,
   FILE_URI_GAMELOG,
   FILE_URI_HELP,
-  FILE_URI_LOUDDATAPATHLUA,
+  FILE_URI_QUIETDATAPATHLUA,
   FILE_URI_ICONMOD,
   FILE_URI_SHORTCUT,
-  DIR_LOUD_USERMODS,
-  DIR_LOUD_USERMAPS,
+  DIR_QUIET_USERMODS,
+  DIR_QUIET_USERMAPS,
   FILE_URI_LOG_FOLDER,
   FILE_URI_GAMELOG_FOLDER,
 } from '../constants';
@@ -30,7 +30,7 @@ export type Target =
   | 'gamelogFolder'
   | 'help'
   | 'info'
-  | 'loud'
+  | 'quiet'
   | 'paypal'
   | 'patreon'
   | 'discord'
@@ -68,11 +68,11 @@ const targetPath = (target: Target) => {
 export const targetURI = (target: Target) => {
   switch (target) {
     case 'datapathlua':
-      return FILE_URI_LOUDDATAPATHLUA;
+      return FILE_URI_QUIETDATAPATHLUA;
     case 'maps':
-      return DIR_LOUD_USERMAPS.replace(/\//g, '\\');
+      return DIR_QUIET_USERMAPS.replace(/\//g, '\\');
     case 'mods':
-      return DIR_LOUD_USERMODS.replace(/\//g, '\\');
+      return DIR_QUIET_USERMODS.replace(/\//g, '\\');
     case 'replays':
       return DOC_DIR_SUPCOM_REPLAYS;
     case 'log':
@@ -87,8 +87,8 @@ export const targetURI = (target: Target) => {
       return FILE_URI_HELP;
     case 'info':
       return FILE_URI_INFO;
-    case 'loud':
-      return DIR_LOUD_GAMEDATA;
+    case 'quiet':
+      return DIR_QUIET_GAMEDATA;
     case 'iconmod':
       return FILE_URI_ICONMOD;
     case 'shortcut':

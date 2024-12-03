@@ -5,19 +5,19 @@ import { Observable } from 'rxjs';
 import { AjaxObservable } from 'rxjs/internal/observable/dom/AjaxObservable';
 
 export enum PatchNotesURL {
-  Client = 'http://api.github.com/repos/RAJDerks/loud-electron/releases',
-  LOUD = `https://raw.githubusercontent.com/LOUD-Project/Git-LOUD/master/CHANGELOG.txt`,
+    Client = 'https://github.com/Team-QUIET/quiet-updater/releases',
+    QUIET = 'https://github.com/Team-QUIET/QUIET-Community-Edition/blob/main/changelog/V1.69.md',
 }
 
 const fetchPatchNotes$ = (url: PatchNotesURL): Observable<PatchNote[] | null> =>
   new AjaxObservable({
     method: 'GET',
     url,
-    responseType: url === PatchNotesURL.LOUD ? 'text' : 'json',
+    responseType: url === PatchNotesURL.QUIET ? 'text' : 'json',
   }).pipe(
     map(({ response }: any) => {
       console.warn(response);
-      if (url === PatchNotesURL.LOUD) {
+      if (url === PatchNotesURL.QUIET) {
         return [
           {
             body: response,

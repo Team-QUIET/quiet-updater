@@ -39,6 +39,20 @@ These are the primary features of the client:
 
 If you want to contribute to this Client or the Mod itself, feel free to post a message in our Discord.
 
+
+## Development
+- clone this repository
+- ensure you have npm and yarn installed
+- create a file ./.env.development in the repo folder where REACT_APP_FS_BASE_URL is 
+  set to your root SCFA installation path:
+
+```shell
+REACT_APP_FS_BASE_URL=C:\Program Files (x86)\Steam\steamapps\common\Supreme Commander Forged Alliance
+REACT_APP_LOG_CONFIG_CHANNELS=log,main,file
+```
+
+- yarn dev
+
 ```
 requirements: node, yarn, npm install eslint@^7.0.2 -g
 development: yarn && yarn dev

@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { DIR_LOUD_BIN, DIR_LOUD_USERMODS } from '../constants';
+import { DIR_QUIET_BIN, DIR_QUIET_USERMODS } from '../constants';
 import { logEntry } from './logger';
 import rimraf from 'rimraf';
 
@@ -29,14 +29,14 @@ const stableIconDict = {
 
 const moveIcons = (iconSet: IconSet) => {
   const targetIconSet = stableIconDict[iconSet];
-  const targetIconSetPath = `${DIR_LOUD_BIN}/${targetIconSet}`;
-  const targetIconDestPath = `${DIR_LOUD_USERMODS}/${targetIconSet}`;
+  const targetIconSetPath = `${DIR_QUIET_BIN}/${targetIconSet}`;
+  const targetIconDestPath = `${DIR_QUIET_USERMODS}/${targetIconSet}`;
   removeExistingIconSet(() => {
     if (iconSet === IconSet.Classic) {
       logEntry('Installed classic icons', 'log', ['main', 'file', 'log']);
       return;
     }
-    fs.stat(`${DIR_LOUD_BIN}/${targetIconSet}`, (fsErr) => {
+    fs.stat(`${DIR_QUIET_BIN}/${targetIconSet}`, (fsErr) => {
       if (fsErr) {
         logEntry(
           `Could not find ${targetIconSet} in Bin folder ${targetIconSetPath}.`,
@@ -74,7 +74,7 @@ const removeExistingIconSet = (callback: () => void) => {
     'file',
   ]);
 
-  fs.readdir(DIR_LOUD_USERMODS, (readDirErr, files) => {
+  fs.readdir(DIR_QUIET_USERMODS, (readDirErr, files) => {
     if (readDirErr) {
       logEntry(
         `Error finding existing IconSet: ${readDirErr.message}`,
@@ -86,7 +86,7 @@ const removeExistingIconSet = (callback: () => void) => {
     existingIconSet =
       files.find((val) => val.startsWith(stableIconPrefix)) ?? null;
     if (existingIconSet) {
-      rimraf(`${DIR_LOUD_USERMODS}/${existingIconSet}`, (err) => {
+      rimraf(`${DIR_QUIET_USERMODS}/${existingIconSet}`, (err) => {
         if (err) {
           logEntry(`Error removing exisiting IconSet ${err.message}`, 'error', [
             'main',

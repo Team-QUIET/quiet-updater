@@ -42,7 +42,7 @@ const MainVersion: FunctionComponent<Props> = ({ timestamp }) => {
     <>
       <div className={classes.buttonWrapper}>
         <Typography className={classes.versionIndicator}>
-          QUIET: {checkModVersion(CheckModVersion.LOUD)}
+          QUIET: {checkModVersion(CheckModVersion.QUIET)}
         </Typography>
         <Typography className={classes.versionIndicator}>
           LCE: {checkModVersion(CheckModVersion.LCE)}

@@ -30,7 +30,7 @@ import removeMap$ from '../../util/removeMap';
 import { logEntry } from '../../util/logger';
 import openTarget from '../../util/openTarget';
 import mapSync$ from '../../util/mapSync';
-import { DIR_LOUD_USERMAPS } from '../../constants';
+import { DIR_QUIET_USERMAPS } from '../../constants';
 import mapSyncWrite$ from '../../util/mapSyncWrite';
 import got from 'got';
 import { from, of } from 'rxjs';
@@ -332,7 +332,7 @@ const MapsDetails: FunctionComponent<Props> = ({
                 .pipe(switchMap(({ mapDir }) => removeMap$(mapDir)))
                 .subscribe(() => {
                   setMapState(MapState.None);
-                  mapSync$(DIR_LOUD_USERMAPS).subscribe(
+                  mapSync$(DIR_QUIET_USERMAPS).subscribe(
                     (syncMap) => {
                       mapSyncWrite$(syncMap.response).subscribe();
                     },
@@ -366,7 +366,7 @@ const MapsDetails: FunctionComponent<Props> = ({
                                 path.basename(file)
                               ).pipe(
                                 tap(() => {
-                                  mapSync$(DIR_LOUD_USERMAPS).subscribe(
+                                  mapSync$(DIR_QUIET_USERMAPS).subscribe(
                                     (syncMap) => {
                                       mapSyncWrite$(
                                         syncMap.response
@@ -401,7 +401,7 @@ const MapsDetails: FunctionComponent<Props> = ({
                       checkMap$(path.basename(file), version)
                         .pipe(switchMap(({ mapDir }) => removeMap$(mapDir)))
                         .subscribe(() => {
-                          mapSync$(DIR_LOUD_USERMAPS).subscribe(
+                          mapSync$(DIR_QUIET_USERMAPS).subscribe(
                             (syncMap) => {
                               mapSyncWrite$(syncMap.response).subscribe();
                             },

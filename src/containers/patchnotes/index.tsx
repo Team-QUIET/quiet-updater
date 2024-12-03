@@ -79,7 +79,7 @@ const PatchNotes = () => {
   const [patchNotes, setPatchNotes] = useState<PatchNote[] | null | undefined>(
     undefined
   );
-  const [patchNotesLOUD, setPatchNotesLOUD] = useState<
+  const [patchNotesQUIET, setPatchNotesQUIET] = useState<
     PatchNote[] | null | undefined
   >(undefined);
 
@@ -90,18 +90,18 @@ const PatchNotes = () => {
         console.error(e);
         setPatchNotes(null);
       });
-    const subscriptionLOUD = fetchPatchNotes$(PatchNotesURL.LOUD)
+    const subscriptionQUIET = fetchPatchNotes$(PatchNotesURL.QUIET)
       .pipe(delay(1200))
-      .subscribe(setPatchNotesLOUD, (e) => {
+      .subscribe(setPatchNotesQUIET, (e) => {
         console.error(e);
-        setPatchNotesLOUD(null);
+        setPatchNotesQUIET(null);
       });
     return () => {
       if (subscription) {
         subscription.unsubscribe();
       }
-      if (subscriptionLOUD) {
-        subscriptionLOUD.unsubscribe();
+      if (subscriptionQUIET) {
+        subscriptionQUIET.unsubscribe();
       }
     };
   }, [retryTimestamp]);
@@ -114,7 +114,7 @@ const PatchNotes = () => {
       </Typography>
       <Button
         onClick={() => {
-          setPatchNotesLOUD(undefined);
+          setPatchNotesQUIET(undefined);
           setPatchNotes(undefined);
           setRetryTimestamp(Date.now().valueOf());
         }}
@@ -140,7 +140,7 @@ const PatchNotes = () => {
           size="small"
           variant={viewIdx === 0 ? 'contained' : 'text'}
         >
-          LOUD
+          QUIET
         </Button>
         <Button
           className={classes.headerButton}
@@ -158,13 +158,13 @@ const PatchNotes = () => {
         {(() => {
           switch (viewIdx) {
             case 0:
-              if (patchNotesLOUD === null) {
+              if (patchNotesQUIET === null) {
                 return Empty;
               }
-              if (patchNotesLOUD === undefined) {
+              if (patchNotesQUIET === undefined) {
                 return <Loading />;
               }
-              return patchNotesLOUD.map((note) => {
+              return patchNotesQUIET.map((note) => {
                 return (
                   <div className={classes.note}>
                     <div className={classes.noteHeader}>

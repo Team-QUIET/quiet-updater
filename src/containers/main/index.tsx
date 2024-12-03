@@ -26,10 +26,10 @@ import { RemoteFileInfo } from '../../util/types';
 import MainLog from './MainLog';
 import {
   BASE_URI,
-  DIR_LOUD_USERMAPS,
-  DIR_LOUD_USERMODS,
-  DIR_LOUD_USERMODS_LCE_ZIP,
-  DIR_LOUD_USERMODS_M28_ZIP,
+  DIR_QUIET_USERMAPS,
+  DIR_QUIET_USERMODS,
+  DIR_QUIET_USERMODS_LCE_ZIP,
+  DIR_QUIET_USERMODS_M28_ZIP,
 } from '../../constants';
 import rungame from '../../util/rungame';
 import checkFolder from '../../util/checkFolder';
@@ -136,7 +136,7 @@ const Main: FunctionComponent = () => {
       }
     );
     createUserDirectories();
-    mapSync$(DIR_LOUD_USERMAPS).subscribe(
+    mapSync$(DIR_QUIET_USERMAPS).subscribe(
       (syncMap) => {
         mapSyncWrite$(syncMap.response).subscribe();
         if (Object.keys(syncMap.response).length > 0) {
@@ -162,21 +162,21 @@ const Main: FunctionComponent = () => {
       checkLCEUpdate$().subscribe((n) => {
         if (n) {
           logEntry('Downloading LCE zip', 'log');
-          download(n, DIR_LOUD_USERMODS_LCE_ZIP, (_, perc, done) => {
+          download(n, DIR_QUIET_USERMODS_LCE_ZIP, (_, perc, done) => {
             MainLogDownloadFilePercentageStatusSubject.next(perc ?? 0);
             if (done) {
-              const dirs = fs.readdirSync(DIR_LOUD_USERMODS);
+              const dirs = fs.readdirSync(DIR_QUIET_USERMODS);
               dirs.forEach((d) => {
                 const isDir = fs
-                  .statSync(path.join(DIR_LOUD_USERMODS, d))
+                  .statSync(path.join(DIR_QUIET_USERMODS, d))
                   .isDirectory();
                 if (
                   (d.includes('M28AI') && isDir) ||
-                  (d.includes('LOUD-Community-Edition') && isDir) ||
+                  (d.includes('QUIET-Community-Edition') && isDir) ||
                   (d.includes('QUIET-Community-Edition') && isDir)
                 ) {
                   try {
-                    rimraf.sync(path.join(DIR_LOUD_USERMODS, d));
+                    rimraf.sync(path.join(DIR_QUIET_USERMODS, d));
                     logEntry(`Succesfully removed usermod ${d}`, 'log');
                   } catch (e) {
                     logEntry(e as any, 'error');
@@ -185,9 +185,9 @@ const Main: FunctionComponent = () => {
               });
               logEntry('Succesfully downloaded QCE zip', 'log');
               logEntry('Unpacking downloaded QCE zip', 'log');
-              unpackZIP$(DIR_LOUD_USERMODS_LCE_ZIP, DIR_LOUD_USERMODS);
+              unpackZIP$(DIR_QUIET_USERMODS_LCE_ZIP, DIR_QUIET_USERMODS);
               logEntry('Succesfully unzipped QCE zip', 'log');
-              fs.unlinkSync(DIR_LOUD_USERMODS_LCE_ZIP);
+              fs.unlinkSync(DIR_QUIET_USERMODS_LCE_ZIP);
               logEntry('Succesfully removed QCE zip', 'log');
               setUpdateStatus(UpdateStatus.UpToDate);
               updateM28AI();
@@ -205,34 +205,34 @@ const Main: FunctionComponent = () => {
       checkM28Update$().subscribe((n) => {
         if (n) {
           logEntry('Downloading M28AI zip', 'log');
-          download(n, DIR_LOUD_USERMODS_M28_ZIP, (_, perc, done) => {
+          download(n, DIR_QUIET_USERMODS_M28_ZIP, (_, perc, done) => {
             MainLogDownloadFilePercentageStatusSubject.next(perc ?? 0);
             if (done) {
               logEntry('Succesfully downloaded M28AI zip', 'log');
               logEntry('Unpacking downloaded M28AI zip', 'log');
-              unpackZIP$(DIR_LOUD_USERMODS_M28_ZIP, DIR_LOUD_USERMODS);
+              unpackZIP$(DIR_QUIET_USERMODS_M28_ZIP, DIR_QUIET_USERMODS);
               logEntry('Succesfully unzipped M28AI zip', 'log');
               logEntry('Renaming unzipped M28AI dir', 'log');
               {
-                const dirs = fs.readdirSync(DIR_LOUD_USERMODS);
+                const dirs = fs.readdirSync(DIR_QUIET_USERMODS);
                 dirs.forEach((d) => {
                   if (
                     d.toLowerCase().includes('m28') &&
-                    fs.statSync(path.join(DIR_LOUD_USERMODS, d)).isDirectory()
+                    fs.statSync(path.join(DIR_QUIET_USERMODS, d)).isDirectory()
                   ) {
                     try {
                       fs.renameSync(
-                        path.join(DIR_LOUD_USERMODS, d),
-                        path.join(DIR_LOUD_USERMODS, 'M28AI')
+                        path.join(DIR_QUIET_USERMODS, d),
+                        path.join(DIR_QUIET_USERMODS, 'M28AI')
                       );
                     } catch (err) {
                       console.log(err);
                       logEntry(
                         `RENAME ${path.join(
-                          DIR_LOUD_USERMODS,
+                          DIR_QUIET_USERMODS,
                           d
                         )} to ${path.join(
-                          DIR_LOUD_USERMODS,
+                          DIR_QUIET_USERMODS,
                           'M28AI'
                         )} MANUALLY PLEASE`
                       );
@@ -241,7 +241,7 @@ const Main: FunctionComponent = () => {
                   }
                 });
               }
-              fs.unlinkSync(DIR_LOUD_USERMODS_M28_ZIP);
+              fs.unlinkSync(DIR_QUIET_USERMODS_M28_ZIP);
               logEntry('Succesfully removed M28AI zip', 'log');
               setUpdateStatus(UpdateStatus.UpToDate);
             }
@@ -280,7 +280,7 @@ const Main: FunctionComponent = () => {
             fs.unlinkSync(
               path.join(
                 BASE_URI,
-                'LOUD',
+                'QUIET',
                 fileInfos.find((f) =>
                   f.path
                     .toLowerCase()
@@ -374,7 +374,7 @@ const Main: FunctionComponent = () => {
           openTargetCheck('datapathlua').subscribe((n) => {
             changeEnabledItem('louddatapathlua', n);
           });
-          openTargetCheck('loud').subscribe((n) => {
+          openTargetCheck('quiet').subscribe((n) => {
             changeEnabledItem('run', n);
           });
           createDocumentsDirectories$().subscribe(([target, created]) => {
@@ -417,9 +417,9 @@ const Main: FunctionComponent = () => {
           openTargetCheck('datapathlua').subscribe((n) => {
             changeEnabledItem('louddatapathlua', n);
           });
-          openTargetCheck('loud').subscribe((n) => {
+          openTargetCheck('quiet').subscribe((n) => {
             if (!n) {
-              logEntry('LOUD is not installed. Press the update button!');
+              logEntry('QUIET is not installed. Press the update button!');
             }
             changeEnabledItem('run', n);
           });

@@ -5,7 +5,7 @@ import { logEntry } from './logger';
 //@ts-ignore
 import Seven from 'node-7z';
 
-const uriLoud = `${BASE_URI}/LOUD.7z`;
+const uriLoud = `${BASE_URI}/QUIET.7z`;
 const uri7Z = `${BASE_URI}/7z.exe`;
 const uri7ZDLL = `${BASE_URI}/7z.dll`;
 

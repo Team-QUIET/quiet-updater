@@ -138,9 +138,9 @@ const MainContextProvider: FunctionComponent = ({ children }) => {
     openTargetCheck('datapathlua').subscribe((n) => {
       handleChangeEnabledItem('louddatapathlua', n);
     });
-    openTargetCheck('loud').subscribe((n) => {
+    openTargetCheck('quiet').subscribe((n) => {
       if (!n) {
-        logEntry('LOUD is not install. Press the update button!');
+        logEntry('QUIET is not installed. Press the update button!');
       }
       handleChangeEnabledItem('run', n);
     });

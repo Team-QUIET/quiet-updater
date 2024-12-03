@@ -72,7 +72,7 @@
 		"preelectron-pack": "yarn build",
 		"postinstall": "electron-builder install-app-deps",
 		"release": "yarn react-build && electron-builder -c.extraMetadata.main=public/electron.js --publish never",
-		"clean": "rimraf build && rimraf out && rimraf quokka && rimraf LOUD",
+		"clean": "rimraf build && rimraf out && rimraf quokka && rimraf QUIET",
 		"start": "yarn react-start",
 		"build": "yarn release",
 		"test": "yarn react-test",

@@ -26,7 +26,7 @@ import toggleUserContent, {
 } from '../../util/toggleUserContent';
 import { RefreshRounded } from '@material-ui/icons';
 import mapSync$ from '../../util/mapSync';
-import { DIR_LOUD_USERMAPS } from '../../constants';
+import { DIR_QUIET_USERMAPS } from '../../constants';
 import { Pagination } from '@material-ui/lab';
 import { ipcRenderer } from 'electron';
 
@@ -101,7 +101,7 @@ const Maps: FunctionComponent<{}> = () => {
   }, [refreshTimestamp]);
 
   useEffect(() => {
-    mapSync$(DIR_LOUD_USERMAPS).subscribe(
+    mapSync$(DIR_QUIET_USERMAPS).subscribe(
       (syncMap) => {
         setMapsOutOfSync(syncMap?.response ?? null);
       },

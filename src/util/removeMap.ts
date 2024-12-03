@@ -1,5 +1,5 @@
 import path from 'path';
-import { DIR_LOUD_USERMAPS } from '../constants';
+import { DIR_QUIET_USERMAPS } from '../constants';
 import { EMPTY, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { sync as rimrafsync } from 'rimraf';
@@ -12,7 +12,7 @@ const removeMap$ = (mapName: string) => {
   return of(mapDir).pipe(
     map((n) => {
       try {
-        rimrafsync(path.join(DIR_LOUD_USERMAPS, n));
+        rimrafsync(path.join(DIR_QUIET_USERMAPS, n));
       } catch (e) {
         throw e;
       }

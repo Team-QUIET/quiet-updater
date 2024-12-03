@@ -61,8 +61,8 @@ const MainLog: FunctionComponent = () => {
   const logRef = useRef<HTMLDivElement | null>(null);
   const [userScrolled, setUserScrolled] = useState(false);
   const [messages, setMessages] = useState<string[]>([
-    'Welcome to the LOUD Client!',
-    'Press the Update button to update LOUD to the latest version, or run the game with the Run Game button',
+    'Welcome to the QUIET Client!',
+    'Press the Update button to update QUIET to the latest version, or run the game with the Run Game button',
   ]);
 
   useEffect(() => {

@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import { Observable } from 'rxjs';
-import { DIR_LOUD_GAMEDATA } from '../constants';
+import { DIR_QUIET_GAMEDATA } from '../constants';
 
-const generatedLuaDir = path.join(DIR_LOUD_GAMEDATA, 'lua', 'generated');
+const generatedLuaDir = path.join(DIR_QUIET_GAMEDATA, 'lua', 'generated');
 const generatedLuaFile = path.join(generatedLuaDir, 'MapBlacklist.lua');
 
 const template = (
