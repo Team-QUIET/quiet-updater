@@ -5,21 +5,21 @@ import { BASE_URI } from '../constants';
 import { logEntry } from './logger';
 import { from } from 'rxjs';
 
-const BAT_NAME = 'SCFA_Updater.bat';
+const BAT_NAME = 'QUIET_Updater.bat';
 
 const template = () => `
 REM @ECHO OFF
 ${BASE_URI[0]}: 
 cd "${BASE_URI}"
 
-TASKKILL /F /IM "SCFA_Updater.exe"
+TASKKILL /F /IM "QUIET_Updater.exe"
 
-RENAME ".\\SCFA_Updater.exe" "SCFA_Updater_BACKUP"
-RENAME ".\\SCFA_Updater_UPDATE" "SCFA_Updater.exe"
+RENAME ".\\QUIET_Updater.exe" "QUIET_Updater_BACKUP"
+RENAME ".\\QUIET_Updater_UPDATE" "QUIET_Updater.exe"
 
-START "" ".\\SCFA_Updater.exe"
+START "" ".\\QUIET_Updater.exe"
 
-DEL /F ".\\SCFA_Updater_BACKUP"
+DEL /F ".\\QUIET_Updater_BACKUP"
 EXIT
 `;
 

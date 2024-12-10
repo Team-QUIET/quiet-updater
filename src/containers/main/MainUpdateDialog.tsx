@@ -51,11 +51,11 @@ const MainUpdateDialog = () => {
       logEntry(updateURL, 'warn', ['log']);
       download(
         updateURL,
-        `${BASE_URI}/SCFA_Updater_UPDATE`,
+        `${BASE_URI}/QUIET_Updater_UPDATE`,
         (_, perc, done) => {
           if (verbose)
             logEntry(
-              `${BASE_URI}/SCFA_Updater_UPDATE: ${perc}/100 ${BASE_URI}`,
+              `${BASE_URI}/QUIET_Updater_UPDATE: ${perc}/100 ${BASE_URI}`,
               'log',
               ['log', 'main']
             );

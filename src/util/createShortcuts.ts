@@ -6,7 +6,7 @@ import { logEntry } from './logger';
 const create = (exePath: string) => {
   CreateDesktopShortcuts({
     windows: {
-      filePath: `${BASE_URI}/SCFA_Updater.exe`,
+      filePath: `${BASE_URI}/QUIET_Updater.exe`,
       name: 'QUIET Updater',
       description: 'QUIET Project Updater',
       icon: FILE_URI_ICON,

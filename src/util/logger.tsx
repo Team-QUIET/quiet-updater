@@ -8,8 +8,8 @@ import { BASE_URI } from '../constants';
 const LOG_URI =
   process.env.JEST_WORKER_ID === undefined
     ? process.env.NODE_ENV !== 'production'
-      ? './SCFA_Updater.log'
-      : `${BASE_URI}/SCFA_Updater.log`!
+      ? './QUIET_Updater.log'
+      : `${BASE_URI}/QUIET_Updater.log`!
     : './jest_log.txt';
 
 export const logInit = () => {
