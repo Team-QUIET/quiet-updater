@@ -6,7 +6,7 @@ import { AjaxObservable } from 'rxjs/internal/observable/dom/AjaxObservable';
 
 export enum PatchNotesURL {
     Client = 'https://github.com/Team-QUIET/quiet-updater/releases',
-    QUIET = 'https://github.com/Team-QUIET/QUIET-Community-Edition/blob/main/changelog/V1.69.md',
+    QUIET = 'https://raw.githubusercontent.com/Team-QUIET/QUIET-Community-Edition/refs/heads/main/changelog/V1.69.md',
 }
 
 const fetchPatchNotes$ = (url: PatchNotesURL): Observable<PatchNote[] | null> =>
