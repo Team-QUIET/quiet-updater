@@ -283,11 +283,12 @@ const Menu: FunctionComponent = () => {
                 click: buttonCallback,
                 disabled: !enabledItems.includes('log'),
               },
-              {
-                id: 'help-onedrive',
-                label: 'Download from OneDrive',
-                click: buttonCallback,
-              },
+              //temporarily disabled.
+              // {
+              //   id: 'help-onedrive',
+              //   label: 'Download from OneDrive',
+              //   click: buttonCallback,
+              // },
               {
                 id: 'help-help',
                 label: 'Menu help',
