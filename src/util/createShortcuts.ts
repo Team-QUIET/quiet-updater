@@ -18,7 +18,7 @@ const create = (exePath: string) => {
       name: 'QUIET Forged Alliance',
       description: 'QUIET Forged Alliance',
       icon: FILE_URI_ICON,
-      arguments: `/log '..\\QUIET\\bin\\Loud.log' /init '..\\QUIET\\bin\\LoudDataPath.lua'`,
+      arguments: `/log '..\\QUIET\\bin\\QUIET.log' /init '..\\QUIET\\bin\\LoudDataPath.lua'`,
     },
   });
 };
