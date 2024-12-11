@@ -546,7 +546,8 @@ const updaterCreateLocalCRC$ = (logConfig = defaultLogConfig) => {
         }
         const crcs = results
           .filter((res) => {
-            return !excludeCRC.find((ex) => res.toLowerCase().includes(ex));
+              return !excludeCRC.find((ex) => res.toLowerCase().includes(ex)) &&
+                     !res.toLowerCase().includes(".log") ;
           })
           .map((result) => {
             const buffer = fs.readFileSync(result);

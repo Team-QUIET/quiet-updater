@@ -229,7 +229,7 @@ const MainButtons: FunctionComponent<Props> = ({
               <strong>Patch Notes</strong>
             </Typography>
           </Button>
-          <div
+          <div hidden
             className={clsx(
               { [classes.disabledFilter]: !discordURL },
               classes.svgButtonWrapper
@@ -247,7 +247,7 @@ const MainButtons: FunctionComponent<Props> = ({
               <DiscordLogo width="72" height="72" />
             </IconButton>
           </div>
-          <div className={classes.svgButtonWrapper}>
+          <div hidden className={classes.svgButtonWrapper}>
             <IconButton
               style={{ height: 78, width: 78 }}
               onClick={() => {
