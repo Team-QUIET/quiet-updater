@@ -26,7 +26,7 @@ const Loading: FunctionComponent = () => {
             display: 'flex',
             height: 256,
             width: 256,
-            backgroundImage: `url('${require('../assets/quietLauncherSplash_1.png')}')`,
+            backgroundImage: `url('${require('../assets/quietLoading.png')}')`,
             backgroundRepeat: 'none',
           }}
         />

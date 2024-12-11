@@ -21,7 +21,7 @@ const AppLoading: FunctionComponent = () => {
           height: 256,
           width: 256,
           backgroundColor: 'transparent',
-          backgroundImage: `url('${require('../assets/quietLauncherSplash_1.png')}')`,
+          backgroundImage: `url('${require('../assets/quietLoading.png')}')`,
         }}
       />
     </div>
