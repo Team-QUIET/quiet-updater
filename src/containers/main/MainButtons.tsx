@@ -229,7 +229,7 @@ const MainButtons: FunctionComponent<Props> = ({
               <strong>Patch Notes</strong>
             </Typography>
           </Button>
-          <div hidden
+          <div
             className={clsx(
               { [classes.disabledFilter]: !discordURL },
               classes.svgButtonWrapper

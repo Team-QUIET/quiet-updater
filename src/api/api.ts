@@ -2,7 +2,8 @@ import { map } from 'rxjs/operators';
 import { ajax } from 'rxjs/ajax';
 import { AjaxRequest } from 'rxjs/internal/observable/dom/AjaxObservable';
 
-export const apiBaseURI = 'https://theloudproject.org:8081';
+export const apiBaseURI = 'https://quiet-server.thequiteproject.org';
+export const apiBaseURIOld = 'https://theloudproject.org:8081';
 export const apiBaseURIQuiet = 'https://quiet-server.thequiteproject.org';
 // export const apiBaseURI = process.env.REACT_APP_API_URI_DEV!;
 

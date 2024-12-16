@@ -4,7 +4,7 @@ import React, {
   useState,
   useCallback,
 } from 'react';
-import api, { apiBaseURIQuiet } from '../../api/api';
+import api, { apiBaseURIQuiet, apiBaseURIOld} from '../../api/api';
 import MapsTile from './MapsTile';
 import MapsGrid from './MapsGrid';
 import MapsFilters from './MapsFilters';
@@ -84,7 +84,7 @@ const Maps: FunctionComponent<{}> = () => {
 
   useEffect(() => {
     api.get<MapAttr[]>('maps', undefined, apiBaseURIQuiet).subscribe((m) => {
-      api.get<MapAttr[]>('maps').subscribe(
+        api.get<MapAttr[]>('maps', undefined, apiBaseURIOld).subscribe(
         (n) => {
           setMapsFailed(false);
           const quietMaps = m.map((mm) => ({ ...mm, quiet: true }));

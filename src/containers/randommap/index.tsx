@@ -22,7 +22,7 @@ import React, {
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import IO, { Socket } from 'socket.io-client';
-import { apiBaseURI, apiBaseURIQuiet } from '../../api/api';
+import { apiBaseURI} from '../../api/api';
 import PageHeader from '../../components/PageHeader';
 import { logEntry } from '../../util/logger';
 import removeMap$ from '../../util/removeMap';
@@ -166,7 +166,7 @@ const Maps: FunctionComponent<{}> = () => {
   const classes = useStyles();
 
   const [socket, setSocket] = useState<Socket | null>(null);
-  const [imgSrc, setImgSrc] = useState(`${apiBaseURIQuiet}/mapgen/mapgen.png`);
+  const [imgSrc, setImgSrc] = useState(`${apiBaseURI}/mapgen/mapgen.png`);
 
   const [hostState, setHostState] = useState(HostState.None);
   const [mapState, setMapState] = useState(MapState.None);
@@ -192,7 +192,7 @@ const Maps: FunctionComponent<{}> = () => {
   useEffect(() => {
     if (socket) {
       socket.on('mapgen-refreshed', () => {
-        setImgSrc(`${apiBaseURIQuiet}/mapgen/mapgen.png?q=${Date.now()}`);
+        setImgSrc(`${apiBaseURI}/mapgen/mapgen.png?q=${Date.now()}`);
       });
     }
     return () => {
