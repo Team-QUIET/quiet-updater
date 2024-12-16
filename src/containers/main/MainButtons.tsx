@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
   mainButtonContainer: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     flex: '0.33 1 auto',
     '& > *': {

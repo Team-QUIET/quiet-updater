@@ -87,6 +87,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '50% 50%',
     flexDirection: 'column-reverse',
+    backgroundColor: 'black',
   },
 }));
 
