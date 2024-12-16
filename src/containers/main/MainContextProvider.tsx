@@ -31,7 +31,7 @@ interface ActionDisable {
 type Actions = ActionEnable | ActionDisable;
 
 const initialState: State = {
-  enabledItems: [],
+  enabledItems: ['clean-shaders'],
 };
 
 const mainReducer = (state: State, action: Actions): State => {

@@ -18,6 +18,8 @@ import createShortcuts from '../../util/createShortcuts';
 import { switchMap } from 'rxjs/operators';
 import { BASE_URI } from '../../constants';
 import moveIcons, { IconSet } from '../../util/moveIcons';
+import cleanShaders from '../../util/cleanShaders';
+
 const remote = require('@electron/remote');
 
 const currentWindow = remote.getCurrentWindow();
@@ -100,6 +102,9 @@ const Menu: FunctionComponent = () => {
       } else if (menu.id === 'help-patchnotes') {
         ipcRenderer.send('open-route', 'patchnotes');
       }
+        else if (menu.id === 'clean-shaders') {
+            cleanShaders(true);
+        }
     },
     [changeEnabledItem]
   );
@@ -132,12 +137,6 @@ const Menu: FunctionComponent = () => {
                 click: buttonCallback,
                 disabled: !enabledItems.includes('shortcut'),
               },
-              // {
-              //   id: 'run-iconmod',
-              //   label: 'Icons Mod Installer',
-              //   click: buttonCallback,
-              //   disabled: !enabledItems.includes('iconmod'),
-              // },
               {
                 id: 'open-maps',
                 label: 'Open Maps folder',
@@ -173,6 +172,12 @@ const Menu: FunctionComponent = () => {
                 label: 'List updates',
                 click: buttonCallback,
                 disabled: !enabledItems.includes('run'),
+              },
+              {
+                  id: 'clean-shaders',
+                  label: 'Clean legacy cached SCFA shaders',
+                  click: buttonCallback,
+                  disabled: !enabledItems.includes('clean-shaders'),
               },
               {
                 id: 'create-crc',

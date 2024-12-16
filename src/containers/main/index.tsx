@@ -60,6 +60,8 @@ import unpackZIP$ from '../../util/unpackZIP';
 import checkM28Update$ from '../../util/checkM28Update';
 import rimraf from 'rimraf';
 import MainVersion from './MainVersion';
+import cleanShaders from '../../util/cleanShaders';
+
 const remote = require('@electron/remote');
 
 const useStyles = makeStyles((theme) => ({
@@ -425,6 +427,7 @@ const Main: FunctionComponent = () => {
             }
             changeEnabledItem('run', n);
           });
+          cleanShaders(false);
           setTimeout(() => {
             logEntry(
               `All files up to date! Start the game with the "Run Game" button!`
