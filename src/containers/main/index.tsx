@@ -84,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     backgroundImage: `url('${require('../../assets/quietLauncherSplash_1.png')}')`,
     backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat',
     backgroundPosition: '50% 50%',
     flexDirection: 'column-reverse',
   },
