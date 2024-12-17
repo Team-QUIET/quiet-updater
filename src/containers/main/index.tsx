@@ -60,6 +60,8 @@ import unpackZIP$ from '../../util/unpackZIP';
 import checkM28Update$ from '../../util/checkM28Update';
 import rimraf from 'rimraf';
 import MainVersion from './MainVersion';
+import cleanShaders from '../../util/cleanShaders';
+
 const remote = require('@electron/remote');
 
 const useStyles = makeStyles((theme) => ({
@@ -84,8 +86,10 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     backgroundImage: `url('${require('../../assets/quietLauncherSplash_1.png')}')`,
     backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat',
     backgroundPosition: '50% 50%',
     flexDirection: 'column-reverse',
+    backgroundColor: 'black',
   },
 }));
 
@@ -423,6 +427,7 @@ const Main: FunctionComponent = () => {
             }
             changeEnabledItem('run', n);
           });
+          cleanShaders(false);
           setTimeout(() => {
             logEntry(
               `All files up to date! Start the game with the "Run Game" button!`

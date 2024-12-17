@@ -1,4 +1,5 @@
 import path from 'path';
+import { env } from 'process';
 const remote = require('@electron/remote');
 
 const isJest = process.env.JEST_WORKER_ID !== undefined;
@@ -11,6 +12,7 @@ const BASE_URI: string = !isJest
 
 const DOC_DIR = isJest ? '' : remote.app.getPath('documents');
 const APPDATA_DIR = isJest ? '' : remote.app.getPath('appData');
+const HOMEPATH_DIR = env.HOMEPATH;
 const DOC_DIR_SUPCOM_MAPS = `${DOC_DIR}/My Games/Gas Powered Games/Supreme Commander Forged Alliance/Maps`.replace(
   /\//g,
   '\\'
@@ -30,6 +32,9 @@ const DOC_URI_GAMEPREFS = path.resolve(
     '\\'
   )
 );
+
+const APPDATA_CACHE = path.resolve(`${APPDATA_DIR}/../Local/Gas Powered Games/Supreme Commander Forged Alliance/cache`);
+const SETTINGS_CACHE =  path.resolve(`${HOMEPATH_DIR}/Local Settings/Application Data/Gas Powered Games/Supreme Commander Forged Alliance/cache`);
 
 const DIR_QUIET_BIN = `${BASE_URI}/QUIET/bin`;
 const DIR_QUIET_GAMEDATA = `${BASE_URI}/QUIET/gamedata`;
@@ -55,6 +60,8 @@ const URI_EU_MIRROR = '';
 const URI_EU_MIRROR_7ZIP_DLL = `${URI_EU_MIRROR}7z.dll`;
 const URI_EU_MIRROR_7ZIP_EXE = `${URI_EU_MIRROR}7z.exe`;
 const URI_EU_MIRROR_QUIET = `${URI_EU_MIRROR}QUIET.7z`;
+
+const CURRENT_MESH_VERSION = "mesh.1.6.6"
 
 export {
   BASE_URI,
@@ -83,4 +90,9 @@ export {
   URI_EU_MIRROR_7ZIP_DLL,
   URI_EU_MIRROR_7ZIP_EXE,
   URI_EU_MIRROR_QUIET,
+  APPDATA_DIR,
+  HOMEPATH_DIR,
+  APPDATA_CACHE,
+  SETTINGS_CACHE,
+  CURRENT_MESH_VERSION,
 };

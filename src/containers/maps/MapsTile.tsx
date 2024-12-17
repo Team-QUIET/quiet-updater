@@ -14,7 +14,7 @@ import SizeIcon from '@material-ui/icons/AspectRatio';
 import DownloadIcon from '@material-ui/icons/GetAppRounded';
 import { mapSizeToString } from './utils';
 import clsx from 'clsx';
-import { apiBaseURI, apiBaseURIQuiet } from '../../api/api';
+import { apiBaseURIOld, apiBaseURIQuiet } from '../../api/api';
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -133,7 +133,7 @@ const MapsTile: FunctionComponent<Props> = ({
       <Card square elevation={0} className={classes.root} onClick={onClick}>
         <CardMedia
           image={
-            !quiet ? `${apiBaseURI}/${image}` : `${apiBaseURIQuiet}/${image}`
+            !quiet ? `${apiBaseURIOld}/${image}` : `${apiBaseURIQuiet}/${image}`
           }
           className={classes.media}
         />

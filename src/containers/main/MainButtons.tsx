@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
   mainButtonContainer: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     flex: '0.33 1 auto',
     '& > *': {
@@ -229,7 +229,7 @@ const MainButtons: FunctionComponent<Props> = ({
               <strong>Patch Notes</strong>
             </Typography>
           </Button>
-          <div hidden
+          <div
             className={clsx(
               { [classes.disabledFilter]: !discordURL },
               classes.svgButtonWrapper

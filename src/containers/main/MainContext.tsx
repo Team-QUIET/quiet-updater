@@ -13,7 +13,8 @@ export type MainContextItems =
   | 'log'
   | 'iconmod'
   | 'run'
-  | 'shortcut';
+  | 'shortcut'
+  | 'clean-shaders';
 
 export interface IMainContext {
   enabledItems: MainContextItems[];

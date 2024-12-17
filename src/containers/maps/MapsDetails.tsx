@@ -21,7 +21,7 @@ import DownloadsIcon from '@material-ui/icons/GetAppRounded';
 import { mapSizeToString } from './utils';
 import clsx from 'clsx';
 import { fromFetch } from 'rxjs/fetch';
-import { apiBaseURI, apiBaseURIQuiet } from '../../api/api';
+import { apiBaseURIOld, apiBaseURIQuiet } from '../../api/api';
 import { switchMap, tap } from 'rxjs/operators';
 import checkMap$ from '../../util/checkMap';
 import path from 'path';
@@ -167,7 +167,7 @@ const MapsDetails: FunctionComponent<Props> = ({
   const [mapState, setMapState] = useState(MapState.None);
   const [progressState, setProgressState] = useState(0);
 
-  const baseURIAdjusted = !quiet ? apiBaseURI : apiBaseURIQuiet;
+  const baseURIAdjusted = !quiet ? apiBaseURIOld : apiBaseURIQuiet;
 
   useEffect(() => {
     checkMap$(path.basename(file), version).subscribe(

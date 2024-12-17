@@ -4,7 +4,7 @@ import { tap } from 'rxjs/operators';
 const checkUpdate$ = () =>
   ajax
     .getJSON(
-      'http://api.github.com/repos/RAJDerks/loud-electron/releases/latest'
+        'https://github.com/Team-QUIET/quiet-updater/releases/latest'
     )
     .pipe(
       tap((response) => {
