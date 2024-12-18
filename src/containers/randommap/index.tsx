@@ -472,7 +472,7 @@ const Maps: FunctionComponent<{}> = () => {
                   setValMexes(Array.isArray(value) ? value[0] : value)
                 }
               />
-              <Typography>1</Typography>
+                <Typography>{valMexes.toFixed(2)}</Typography>
             </div>
             <div className={classes.sliderWrapper}>
               <div className={classes.sliderWrapperTitle}>
@@ -497,7 +497,7 @@ const Maps: FunctionComponent<{}> = () => {
                   setValReclaim(Array.isArray(value) ? value[0] : value)
                 }
               />
-              <Typography>1</Typography>
+            <Typography>{valReclaim.toFixed(2)}</Typography>
             </div>
             <Typography style={{ color: 'white' }}>
               If you see a broken image OR if you didn't get a response within

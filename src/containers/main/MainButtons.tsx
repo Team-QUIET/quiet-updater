@@ -141,31 +141,31 @@ const MainButtons: FunctionComponent<Props> = ({
         }
       );
   }, []);
-
-  useEffect(() => {
-    api
-      .get<string>('static/paypal', { responseType: 'text' })
-      .subscribe(
-        (n) => {
-          if (!n || !n.includes('//paypal')) {
-            logEntry(`Paypal URL could not be fetched`, 'error', [
-              'log',
-              'main',
-              'file',
-            ]);
-          }
-          setPaypalURL(n);
-        },
-        (e) => {
-          logEntry(`Paypal URL could not be fetched`, 'error', [
-            'log',
-            'main',
-            'file',
-          ]);
-          setPaypalURL(null);
-        }
-      );
-  }, []);
+  
+  // useEffect(() => {
+  //   api
+  //     .get<string>('static/paypal', { responseType: 'text' })
+  //     .subscribe(
+  //       (n) => {
+  //         if (!n || !n.includes('//paypal')) {
+  //           logEntry(`Paypal URL could not be fetched`, 'error', [
+  //             'log',
+  //             'main',
+  //             'file',
+  //           ]);
+  //         }
+  //         setPaypalURL(n);
+  //       },
+  //       (e) => {
+  //         logEntry(`Paypal URL could not be fetched`, 'error', [
+  //           'log',
+  //           'main',
+  //           'file',
+  //         ]);
+  //         setPaypalURL(null);
+  //       }
+  //     );
+  // }, []);
 
   return (
     <>
