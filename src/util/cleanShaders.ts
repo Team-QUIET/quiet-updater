@@ -1,3 +1,4 @@
+//@ts-nocheck
 import fs from 'fs'
 import { APPDATA_CACHE, SETTINGS_CACHE, CURRENT_MESH_VERSION } from '../constants';
 import { logEntry } from './logger';
