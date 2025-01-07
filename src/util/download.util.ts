@@ -1,4 +1,5 @@
 import fs, { WriteStream } from 'fs';
+import path from 'path';
 
 export type DownloadProgressCallback = (
   bytes: number,
@@ -33,6 +34,12 @@ async function download(
     length || parseInt(response.headers.get('Content-Length') || '0', 10);
   const reader = body.getReader();
   const writer = fs.createWriteStream(targetFile);
+
+  // Check if Dir exists, errors otherwise
+  // console.warn('path: ' + path.dirname(targetFile));
+  fs.mkdirSync(path.dirname(targetFile), {
+    recursive: true,
+  });
 
   writer.on('open', () => {
     streamWithProgress(finalLength, reader, writer, (bytes, perc, done) => {

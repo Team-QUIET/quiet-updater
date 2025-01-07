@@ -16,7 +16,6 @@ import {
   updaterCleanupMaps$,
   updaterCleanupMods$,
   updaterCleanupGameData$,
-  updaterCleanupUserprefs$,
 } from '../../util/updater';
 import { UpdateStatus } from './constants';
 import { logEntry } from '../../util/logger';
@@ -51,8 +50,6 @@ import toggleUserContent, {
 import { GlobalHotKeys } from 'react-hotkeys';
 import mapSync$ from '../../util/mapSync';
 import mapSyncWrite$ from '../../util/mapSyncWrite';
-import fetchMirror from '../../util/fetchMirror';
-import unpackMirror from '../../util/unpackMirror';
 import checkCleanInstall from '../../util/checkCleanInstall';
 import checkLCEUpdate$ from '../../util/checkLCEUpdate';
 import download from '../../util/download.util';
@@ -280,24 +277,6 @@ const Main: FunctionComponent = () => {
         switchMap((crcInfo) => {
           const fis = updaterParseRemoteFileContent(crcInfo);
           fileInfos = fis.slice();
-          try {
-            fs.unlinkSync(
-              path.join(
-                BASE_URI,
-                'QUIET',
-                fileInfos.find((f) =>
-                  f.path
-                    .toLowerCase()
-                    .includes('LoudDataPath.lua'.toLowerCase())
-                )!.path
-              )
-            );
-          } catch (e) {
-            logEntry(`Could not delete bin/LoudDataPath.lua! ${e}`, 'error', [
-              'log',
-              'file',
-            ]);
-          }
           return updaterCollectOutOfSyncFiles$(fis, BASE_URI, {
             channels: ['file'],
           });
@@ -314,7 +293,10 @@ const Main: FunctionComponent = () => {
           iif<never, [RemoteFileInfo[], RemoteFileInfo[]]>(
             () => outOfSyncFileInfos.length === 0,
             EMPTY,
-            updaterGetAndWriteRemoteFiles$(BASE_URI, outOfSyncFileInfos)
+            updaterGetAndWriteRemoteFiles$(
+              path.join(BASE_URI, 'QUIET'),
+              outOfSyncFileInfos
+            )
           )
         )
       )
@@ -461,7 +443,7 @@ const Main: FunctionComponent = () => {
   };
 
   const handleDiscord = (url: string) => {
-     openTarget('discord', url);
+    openTarget('discord', url);
   };
 
   useEffect(() => {

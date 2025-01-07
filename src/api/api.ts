@@ -3,6 +3,7 @@ import { ajax } from 'rxjs/ajax';
 import { AjaxRequest } from 'rxjs/internal/observable/dom/AjaxObservable';
 
 export const apiBaseURI = 'https://quiet-server.thequiteproject.org';
+export const apiFileURI = 'https://quiet-server.thequiteproject.org/quiet';
 //export const apiBaseURIOld = 'https://theloudproject.org:8081';
 export const apiBaseURIOld = 'http://theloudproject.org:8080';
 export const apiBaseURIQuiet = 'https://quiet-server.thequiteproject.org';

@@ -18,7 +18,9 @@ import {
   MainLogDownloadFilePercentageStatusSubject,
   MainLogDownloadFileProgressStatusSubject,
 } from '../containers/main/observables';
-import { BASE_URI, DOC_URI_GAMEPREFS } from '../constants';
+import { BASE_URI, DIR_QUIET_BIN, DOC_URI_GAMEPREFS } from '../constants';
+import download from './download.util';
+import api, { apiFileURI } from '../api/api';
 
 /**
  * Type for FTP instance
@@ -30,12 +32,6 @@ interface FTP extends ftp {
     callback: (err: Error | undefined) => void
   ): void;
 }
-
-const connection = {
-  host: '82.165.140.208',
-  user: 'loudftp',
-  pass: 'loud123',
-};
 
 /**
  * Determine the default log configuration by environment
@@ -86,155 +82,35 @@ const updaterStringToRemoteFileInfo = (fileEntry: string): RemoteFileInfo => {
 };
 
 /**
- * Connect to the FTP server
- */
-const updaterConnectFTP$ = () => {
-  logEntry('updaterConnectFTP$:: Connecting to FTP...');
-  return from<Promise<FTP>>(
-    new Promise((res) => {
-      const client: FTP = new ftp(connection) as FTP;
-      client.on('connect', (err) => {
-        if (err) {
-          logEntry(`updaterConnectFTP$:connect:: ${err}`, 'error');
-          throw err;
-        }
-        client.auth(connection.user!, connection.pass!, (errAuth) => {
-          if (errAuth) {
-            logEntry(`updaterConnectFTP$:auth:: ${errAuth}`, 'error');
-            throw errAuth;
-          }
-          res(client);
-        });
-      });
-      client.on('error', (err) => {
-        logEntry(
-          `updaterConnectFTP$:connect:: Could not connect to FTP ${err}`,
-          'error'
-        );
-        throw err;
-      });
-    })
-  );
-};
-
-/**
  * Fetch the CRC info from the server
  * @param logConfig
  */
 const updaterGetCRCInfo$ = (logConfig: LogConfig = defaultLogConfig) =>
-  from<Promise<string>>(
-    new Promise((res) => {
-      updaterConnectFTP$().subscribe(
-        (client) => {
+  new Observable<string>((subscriber) => {
+    api
+      .get<string>('SCFA_FileInfo.txt', { responseType: 'text' }, apiFileURI)
+      .subscribe(
+        (fileInfo) => {
           logEntry(
             `updaterGetCRCInfo$:auth:: Successfully connected to FTP`,
             'log',
             logConfig.channels
           );
-          client.get('QUIET/SCFA_FileInfo.txt', (err, socket) => {
-            if (err) {
-              logEntry(
-                `updaterGetCRCInfo$:get:: ${err}`,
-                'error',
-                logConfig.channels
-              );
-              throw err;
-            }
-            let str = '';
-            socket.on('data', (d) => {
-              str += d;
-            });
-
-            socket.on('close', (errClose) => {
-              if (errClose) {
-                logEntry(
-                  `updaterGetCRCInfo$:close:: ${err}`,
-                  'error',
-                  logConfig.channels
-                );
-                throw errClose;
-              }
-              logEntry(
-                `updaterGetCRCInfo$:get:: Succesfully retrieved CRC file from FTP`,
-                'log',
-                logConfig.channels
-              );
-              res(str);
-            });
-            socket.resume();
-          });
+          subscriber.next(fileInfo);
         },
         (e) => {
           logEntry(
-            `updaterGetCRCInfo$:connect/auth:: ${e}`,
+            `updaterGetCRCInfo$:get:: ${e}`,
             'error',
             logConfig.channels
           );
+          subscriber.error(e);
+        },
+        () => {
+          subscriber.complete();
         }
       );
-    })
-  );
-
-/**
- * Get a remote file from the server
- * @param fileInfo
- * @param client
- * @param logConfig
- */
-const updaterGetRemoteFile$ = (
-  fileInfo: RemoteFileInfo,
-  client: FTP,
-  logConfig: LogConfig = defaultLogConfig
-) => {
-  return from<Promise<Buffer>>(
-    new Promise((res) => {
-      client.get(`QUIET/${fileInfo.path}`, (err, socket) => {
-        if (err) {
-          logEntry(
-            `updaterGetRemoteFile$:get:: QUIET/${fileInfo.path} ${err}`,
-            'error',
-            logConfig.channels
-          );
-          throw err;
-        }
-        logEntry(
-          `updaterGetRemoteFile$:start:: Start downloading file ${fileInfo.path}, ${fileInfo.size}`,
-          'log',
-          logConfig.channels
-        );
-        MainLogDownloadFilePercentageStatusSubject.next(0);
-        let bufferPercent = 0;
-        let bufferLength = 0;
-        const buffer: Buffer[] = [];
-        socket.on('data', (d) => {
-          buffer.push(d);
-
-          bufferLength += d.byteLength;
-          let newBufferPercent = Math.floor(
-            (bufferLength / fileInfo.size) * 100
-          );
-          if (newBufferPercent !== bufferPercent) {
-            bufferPercent = newBufferPercent;
-            MainLogDownloadFilePercentageStatusSubject.next(bufferPercent);
-          }
-        });
-
-        socket.on('close', (errClose) => {
-          if (errClose) {
-            logEntry(
-              `updaterGetRemoteFile$:close:: ${err}`,
-              'error',
-              logConfig.channels
-            );
-            throw errClose;
-          }
-          res(Buffer.concat(buffer));
-        });
-        socket.resume();
-      });
-    })
-  );
-};
+  });
 
 /**
  * Convenience method for fetching and writing multiple files from the FTP
@@ -243,131 +119,87 @@ const updaterGetRemoteFile$ = (
  * @param logConfig
  */
 const updaterGetAndWriteRemoteFiles$ = (
-  baseURI: string,
+  baseURI: string = BASE_URI,
   fileInfos: RemoteFileInfo[],
   logConfig: LogConfig = defaultLogConfig
 ): Observable<[RemoteFileInfo[], RemoteFileInfo[]]> => {
   return new Observable((subscriber) => {
     const filesSucceeded: RemoteFileInfo[] = [];
     const filesFailed: RemoteFileInfo[] = [];
-    return updaterConnectFTP$().subscribe(
-      (c) => {
-        from(fileInfos)
-          .pipe(
-            concatMap((fileInfo, fii) => {
-              if (fii === 0) {
-                MainLogDownloadFileProgressStatusSubject.next([
-                  fii + 1,
-                  fileInfos.length,
-                ]);
-              }
-
-              return updaterGetRemoteFile$(fileInfo as RemoteFileInfo, c).pipe(
-                mergeMap((buffer) =>
-                  updaterWriteBufferToLocalFile$(
-                    baseURI,
-                    fileInfo,
-                    buffer,
-                    logConfig
-                  ).pipe(
-                    map((fi) => {
-                      return [fi, true] as [RemoteFileInfo, boolean];
-                    }),
-                    tap(() => {
-                      MainLogDownloadFileProgressStatusSubject.next([
-                        Math.min(fii + 2, fileInfos.length),
-                        fileInfos.length,
-                      ]);
-                    })
-                  )
-                ),
-                catchError((e) => {
-                  logEntry(
-                    `updaterGetAndWriteRemoteFiles$:: ${e}`,
-                    'error',
-                    logConfig.channels
-                  );
-                  return of([fileInfo, false] as [RemoteFileInfo, boolean]);
-                })
-              );
-            })
-          )
-          .subscribe(
-            ([fileInfo, success]) => {
-              if (success) {
-                filesSucceeded.push(fileInfo);
-              } else {
-                filesFailed.push(fileInfo);
-              }
-            },
-            (e) => {
-              logEntry(`updaterGetAndWriteRemoteFiles$::inner: ${e}`);
-            },
-            () => {
-              subscriber.next([filesSucceeded, filesFailed]);
-              subscriber.complete();
-            }
-          );
-      },
-      (e) => {
-        logEntry(`updaterGetAndWriteRemoteFiles$::outer: ${e}`);
-        subscriber.error(e);
-      }
+    logEntry(
+      `updaterGetAndWriteRemoteFiles$:: start`,
+      'log',
+      logConfig.channels
     );
-  });
-};
-
-/**
- * Write a buffer to a local file
- * @param uri
- * @param fileInfo
- * @param buffer
- * @param logConfig
- */
-const updaterWriteBufferToLocalFile$ = (
-  uri: string,
-  fileInfo: RemoteFileInfo,
-  buffer: Buffer,
-  logConfig: LogConfig = defaultLogConfig
-) => {
-  return from(
-    new Promise<RemoteFileInfo>((res, rej) => {
-      const path = updaterCreateLocalFileURI(uri, fileInfo.path);
-      const dir = updaterCreateLocalFileDirURI(path);
-      logEntry(
-        `Writing file ${path}, ${fileInfo.size}`,
-        'log',
-        logConfig.channels
-      );
-      fs.mkdir(dir, { recursive: true }, (err) => {
-        if (err) {
-          logEntry(
-            `updaterWriteBufferToLocalFile$:mkdir::${fileInfo.path},${buffer.length} / ${err}`,
-            'error',
-            logConfig.channels
-          );
-          throw err;
-        }
-        fs.writeFile(path, buffer, (errWrite) => {
-          if (errWrite) {
-            logEntry(
-              `updaterWriteBufferToLocalFile$:mkdir::${fileInfo.path},${buffer.length} / ${errWrite}`,
-              'error',
-              logConfig.channels
-            );
-            throw errWrite;
+    from(fileInfos)
+      .pipe(
+        concatMap((fileInfo, fii) => {
+          if (fii === 0) {
+            MainLogDownloadFileProgressStatusSubject.next([
+              fii + 1,
+              fileInfos.length,
+            ]);
           }
 
-          logEntry(
-            `updaterWriteBufferToLocalFile$:done:: Successfully written file ${fileInfo.path},${buffer.length}`,
-            'log',
-            logConfig.channels.filter((channel) => channel !== 'main')
-          );
-          res(fileInfo);
-        });
-      });
-    })
-  );
+          return new Observable<[RemoteFileInfo, boolean]>((sub) => {
+            MainLogDownloadFileProgressStatusSubject.next([
+              Math.min(fii + 2, fileInfos.length),
+              fileInfos.length,
+            ]);
+            try {
+              logEntry(
+                `updaterGetAndWriteRemoteFiles$:: Downloading => ${path.join(
+                  apiFileURI,
+                  encodeURI(fileInfo.path)
+                )}`,
+                'log',
+                logConfig.channels
+              );
+              let percentDownloaded = 0;
+              download(
+                path.join(apiFileURI, encodeURI(fileInfo.path)),
+                path.join(baseURI, fileInfo.path),
+                (_, perc, done) => {
+                  if (perc && percentDownloaded !== Math.round(perc)) {
+                    percentDownloaded = perc;
+                    MainLogDownloadFilePercentageStatusSubject.next(perc);
+                  }
+                  if (done) {
+                    sub.next([fileInfo, true]);
+                    logEntry(
+                      `updaterGetAndWriteRemoteFile$:: ${fileInfo.path} downloaded`
+                    );
+                    sub.complete();
+                  }
+                }
+              );
+            } catch (err) {
+              logEntry(
+                `updaterGetAndWriteRemoteFiles$:: ${err}`,
+                'error',
+                logConfig.channels
+              );
+            }
+          });
+        })
+      )
+      .subscribe(
+        ([fileInfo, success]) => {
+          if (success) {
+            filesSucceeded.push(fileInfo);
+          } else {
+            filesFailed.push(fileInfo);
+          }
+        },
+        (e) => {
+          logEntry(`updaterGetAndWriteRemoteFiles$::inner: ${e}`);
+        },
+        () => {
+          subscriber.next([filesSucceeded, filesFailed]);
+          subscriber.complete();
+        }
+      );
+  });
 };
 
 /**
@@ -546,8 +378,10 @@ const updaterCreateLocalCRC$ = (logConfig = defaultLogConfig) => {
         }
         const crcs = results
           .filter((res) => {
-              return !excludeCRC.find((ex) => res.toLowerCase().includes(ex)) &&
-                     !res.toLowerCase().includes(".log") ;
+            return (
+              !excludeCRC.find((ex) => res.toLowerCase().includes(ex)) &&
+              !res.toLowerCase().includes('.log')
+            );
           })
           .map((result) => {
             const buffer = fs.readFileSync(result);
@@ -786,14 +620,11 @@ export {
   updaterCleanupMods$,
   updaterCleanupUserprefs$,
   updaterCreateLocalCRC$,
-  updaterConnectFTP$,
   updaterGetCRCInfo$,
   updaterParseRemoteFileContent,
   updaterCompareRemoteFileInfo$,
   updaterStringToRemoteFileInfo,
   updaterLocalFileData$,
   updaterCollectOutOfSyncFiles$,
-  updaterGetRemoteFile$,
-  updaterWriteBufferToLocalFile$,
   updaterGetAndWriteRemoteFiles$,
 };
