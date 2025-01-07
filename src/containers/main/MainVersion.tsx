@@ -45,7 +45,7 @@ const MainVersion: FunctionComponent<Props> = ({ timestamp }) => {
           QUIET: {checkModVersion(CheckModVersion.QUIET)}
         </Typography>
         <Typography className={classes.versionIndicator}>
-          LCE: {checkModVersion(CheckModVersion.LCE)}
+          QCE: {checkModVersion(CheckModVersion.QCE)}
         </Typography>
         <Typography className={classes.versionIndicator}>
           M28: {checkModVersion(CheckModVersion.M28)}

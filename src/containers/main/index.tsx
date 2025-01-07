@@ -27,7 +27,7 @@ import {
   BASE_URI,
   DIR_QUIET_USERMAPS,
   DIR_QUIET_USERMODS,
-  DIR_QUIET_USERMODS_LCE_ZIP,
+  DIR_QUIET_USERMODS_QCE_ZIP,
   DIR_QUIET_USERMODS_M28_ZIP,
 } from '../../constants';
 import rungame from '../../util/rungame';
@@ -51,7 +51,7 @@ import { GlobalHotKeys } from 'react-hotkeys';
 import mapSync$ from '../../util/mapSync';
 import mapSyncWrite$ from '../../util/mapSyncWrite';
 import checkCleanInstall from '../../util/checkCleanInstall';
-import checkLCEUpdate$ from '../../util/checkLCEUpdate';
+import checkQCEUpdate$ from '../../util/checkQCEUpdate';
 import download from '../../util/download.util';
 import unpackZIP$ from '../../util/unpackZIP';
 import checkM28Update$ from '../../util/checkM28Update';
@@ -158,12 +158,12 @@ const Main: FunctionComponent = () => {
   }, []);
 
   const handleUpdate = useCallback(async () => {
-    const updateLCE = () => {
+    const updateQCE = () => {
       setUpdateStatus(UpdateStatus.Updating);
-      checkLCEUpdate$().subscribe((n) => {
+      checkQCEUpdate$().subscribe((n) => {
         if (n) {
-          logEntry('Downloading LCE zip', 'log');
-          download(n, DIR_QUIET_USERMODS_LCE_ZIP, (_, perc, done) => {
+          logEntry('Downloading QCE zip', 'log');
+          download(n, DIR_QUIET_USERMODS_QCE_ZIP, (_, perc, done) => {
             MainLogDownloadFilePercentageStatusSubject.next(perc ?? 0);
             if (done) {
               const dirs = fs.readdirSync(DIR_QUIET_USERMODS);
@@ -186,9 +186,9 @@ const Main: FunctionComponent = () => {
               });
               logEntry('Succesfully downloaded QCE zip', 'log');
               logEntry('Unpacking downloaded QCE zip', 'log');
-              unpackZIP$(DIR_QUIET_USERMODS_LCE_ZIP, DIR_QUIET_USERMODS);
+              unpackZIP$(DIR_QUIET_USERMODS_QCE_ZIP, DIR_QUIET_USERMODS);
               logEntry('Succesfully unzipped QCE zip', 'log');
-              fs.unlinkSync(DIR_QUIET_USERMODS_LCE_ZIP);
+              fs.unlinkSync(DIR_QUIET_USERMODS_QCE_ZIP);
               logEntry('Succesfully removed QCE zip', 'log');
               setUpdateStatus(UpdateStatus.UpToDate);
               updateM28AI();
@@ -414,7 +414,7 @@ const Main: FunctionComponent = () => {
             logEntry(
               `All files up to date! Start the game with the "Run Game" button!`
             );
-            updateLCE();
+            updateQCE();
           }, 1500);
         }
       );
