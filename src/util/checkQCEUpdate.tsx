@@ -5,7 +5,7 @@ import { compare } from 'semver';
 import { version } from '../../package.json';
 import { logEntry } from './logger';
 
-const checkLCEUpdate$ = () =>
+const checkQCEUpdate$ = () =>
   ajax
     .get(
       `https://api.github.com/repos/Team-QUIET/QUIET-Community-Edition/releases/latest`
@@ -37,4 +37,4 @@ const checkLCEUpdate$ = () =>
       )
     );
 
-export default checkLCEUpdate$;
+export default checkQCEUpdate$;

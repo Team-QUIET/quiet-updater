@@ -8,7 +8,7 @@ const regexModInfo = /version\s*=\s*"?(.*)"?/i;
 
 export enum CheckModVersion {
   QUIET,
-  LCE,
+  QCE,
   M28,
 }
 
@@ -18,7 +18,7 @@ function checkModVersion(mod: CheckModVersion) {
     case CheckModVersion.QUIET:
       _path = `${DIR_QUIET_GAMEDATA}/lua/ai/CustomAIs_v2/ExtrasAI.lua`;
       break;
-    case CheckModVersion.LCE:
+    case CheckModVersion.QCE:
       _path = `${DIR_QUIET_USERMODS}/QUIET-Community-Edition/mod_info.lua`;
       break;
     case CheckModVersion.M28:
