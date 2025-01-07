@@ -5,20 +5,24 @@ import { logEntry } from './logger';
 const createUserDirectories = () => {
   fs.stat(`${BASE_URI}/QUIET/usermaps`, (err) => {
     if (err) {
-      fs.mkdir(`${BASE_URI}/QUIET/usermaps`, { recursive: true }, (errMkdir) => {
-        if (errMkdir) {
-          logEntry(
-            `createUserDirectories:usermaps:mkDir:: ${errMkdir}`,
-            'error'
-          );
-        } else {
-          logEntry(
-            `createUserDirectories:usermaps:mkDir:: created usermaps folder`,
-            'log',
-            ['log', 'file']
-          );
+      fs.mkdir(
+        `${BASE_URI}/QUIET/usermaps`,
+        { recursive: true },
+        (errMkdir) => {
+          if (errMkdir) {
+            logEntry(
+              `createUserDirectories:usermaps:mkDir:: ${errMkdir}`,
+              'error'
+            );
+          } else {
+            logEntry(
+              `createUserDirectories:usermaps:mkDir:: created usermaps folder`,
+              'log',
+              ['log', 'file']
+            );
+          }
         }
-      });
+      );
     } else {
       fs.readdir(`${BASE_URI}/QUIET/usermaps`, (errReadDir, files) => {
         if (err) {
@@ -40,20 +44,24 @@ const createUserDirectories = () => {
   });
   fs.stat(`${BASE_URI}/QUIET/usermods`, (err) => {
     if (err) {
-      fs.mkdir(`${BASE_URI}/QUIET/usermods`, { recursive: true }, (errMkdir) => {
-        if (errMkdir) {
-          logEntry(
-            `createUserDirectories:usermods:mkDir:: ${errMkdir}`,
-            'error'
-          );
-        } else {
-          logEntry(
-            `createUserDirectories:usermods:mkDir:: created usermods folder`,
-            'log',
-            ['log', 'file']
-          );
+      fs.mkdir(
+        `${BASE_URI}/QUIET/usermods`,
+        { recursive: true },
+        (errMkdir) => {
+          if (errMkdir) {
+            logEntry(
+              `createUserDirectories:usermods:mkDir:: ${errMkdir}`,
+              'error'
+            );
+          } else {
+            logEntry(
+              `createUserDirectories:usermods:mkDir:: created usermods folder`,
+              'log',
+              ['log', 'file']
+            );
+          }
         }
-      });
+      );
     } else {
       fs.readdir(`${BASE_URI}/QUIETx/usermods`, (errReadDir, files) => {
         if (err) {
@@ -63,7 +71,7 @@ const createUserDirectories = () => {
           );
           return;
         }
-        if (files.length) {
+        if (files && files.length) {
           logEntry(
             `*** Warning *** Files found in 'usermods' directory and will be loaded as mods`,
             'log',
