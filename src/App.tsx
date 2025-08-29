@@ -17,18 +17,18 @@ const theme = createMuiTheme({
   palette: {
     type: 'dark',
     primary: {
-     main: '#111213', //colors.blue[700],
+      main: colors.blue[700], //'#111213'
     },
     secondary: {
-      main: "#620F90", //colors.yellow[700],
+      main: colors.yellow[700], //"#620F90",
     },
     text: {
       primary: '#FFFFFF',
       secondary: colors.grey[100],
     },
     background: {
-      default: '#111213', //'#0E263E',
-      paper: '#111213', //'#0E263E',
+      default: '#0E263E', //'#111213',
+      paper:  '#0E263E', //'#111213',
     },
   },
   overrides: {

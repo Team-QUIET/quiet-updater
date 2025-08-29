@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
     flex: '1 1 100%',
     maxWidth: 140,
     height: '100%',
-    backgroundColor: '#620f90', //'#FBFF3A',
+    backgroundColor: '#FBFF3A', //'#620f90'
     borderRadius: 4,
   },
   updateIndicatorText: {

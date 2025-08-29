@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-start',
     alignItems: 'center',
     position: 'relative',
-    backgroundColor: '#620f90', //'#FBFF3A',
+    backgroundColor:  '#FBFF3A', //'#620f90',
     borderRadius: 4,
     marginBottom: 2,
   },
@@ -99,7 +99,7 @@ const indicatorColor = (updateStatus: UpdateStatus) => {
     case UpdateStatus.UpToDate:
       return 'green';
     default:
-      return '#620f90'; //'#FBFF3A';
+      return '#FBFF3A'; //'#620f90';
   }
 };
 

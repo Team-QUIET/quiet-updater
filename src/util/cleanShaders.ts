@@ -23,12 +23,19 @@ function removeShader(filepath){
             } catch (err) {
                 logEntry("failed to clear shader at " + filepath);
             }}}
-
+//as a work-around, we're just going to force clearing the cache
+//by default.  we were trying to avoid doing this if the shaders
+//looked correct by version, but we're getting issues now.
+//so every time we update, we'll clear the shader cache.  This should
+//be a really minor inconvenience, probably not noticable at all.
+//It should also correct shader crashes entirely going forward, particularly
+//for new users.
 const cleanShaders = (force) => {
     try{logEntry("ExpectedSCFA Shader Cache Paths are: \n" + APPDATA_CACHE + " \n and/or "  +
                  SETTINGS_CACHE + "\n");
         cleared = false;
-        let targets = shaderFiles(APPDATA_CACHE, force).concat(shaderFiles(SETTINGS_CACHE,force));
+        //ignore force ui boolean toggle, just pass true so we clear all files.
+        let targets = shaderFiles(APPDATA_CACHE, true).concat(shaderFiles(SETTINGS_CACHE,force));
         targets.forEach(removeShader);
         if (cleared){logEntry("Shader cache is cleared; they will automatically recompile on next SCFA launch.");}
         else {logEntry("Shader cache is clear or already consistent with " + CURRENT_MESH_VERSION)}
