@@ -186,7 +186,7 @@ const Maps: FunctionComponent<{}> = () => {
   const [valReclaimRandom, setValReclaimRandom] = useState(false);
 
   useEffect(() => {
-    setSocket(IO(`ws://quiet-server.thequiteproject.org:3030`));
+    setSocket(IO(`ws://quietmod.org:3030`));
   }, []);
 
   useEffect(() => {
